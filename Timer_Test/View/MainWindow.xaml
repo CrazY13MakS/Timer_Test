@@ -8,12 +8,13 @@
         xmlns:inf="clr-namespace:Timer_Test.Infrastructure"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" TabIndex="1" x:Name="wnd">
+        Title="MainWindow" Height="180" Width="250" TabIndex="1" x:Name="wnd" ResizeMode="NoResize">
     <Window.DataContext>
         <vm:MainWindowViewModel></vm:MainWindowViewModel>
     </Window.DataContext>
     <Window.Resources>
-        <inf:SimpleTimerValidation x:Key="timerValid"/>
+
+        <!--Validate template for TextBox-->
         <ControlTemplate x:Key="ValidationTemplate">
             <DockPanel>
                 <TextBlock Foreground="Red" FontSize="20">!</TextBlock>
@@ -21,6 +22,7 @@
             </DockPanel>
         </ControlTemplate>
 
+        <!--Trigger for validation errors-->
         <Style x:Key="TextBoxInError" TargetType="{x:Type TextBox}">
             <Style.Triggers>
                 <Trigger Property="Validation.HasError" Value="true">
@@ -28,39 +30,43 @@
               Value="{Binding RelativeSource={x:Static RelativeSource.Self},
                               Path=(Validation.Errors)[0].ErrorContent}"/>
                 </Trigger>
-                <DataTrigger Binding="{Binding ElementName=textBox1, Path=Text.Length}" Value="10">
-                    <!--<Setter Property="FocusManager.FocusedElement" Value="{Binding ElementName=ConnectButton}"/>-->
-                    <Setter Property="Foreground" Value="BlueViolet"/>
-                </DataTrigger>
             </Style.Triggers>
         </Style>
+        <!--Style for textblock-->
+        <Style x:Key="TextBlockStyle" TargetType="TextBlock">
+            <Setter Property="FrameworkElement.HorizontalAlignment" Value="Center"/>
+            <Setter Property="FrameworkElement.Margin" Value="5"/>
+            <Setter Property="TextBlock.FontSize" Value="15"/>
+        </Style>
+
     </Window.Resources>
     <StackPanel x:Name="grid1"  Focusable="True" >
-
-        <TextBox Name="textBox1"  FontSize="15" TabIndex="0" 
+        <TextBox Name="textBox1"  
+                 FontSize="15" TabIndex="0"  MinWidth="50" TextAlignment="Center"
              Validation.ErrorTemplate="{StaticResource ValidationTemplate}"
              Style="{StaticResource TextBoxInError}"
-             HorizontalAlignment="Center" Margin="2">
+             HorizontalAlignment="Center" Margin="5">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="LostFocus">
-                    <i:InvokeCommandAction Command="{Binding StartTimerCommand}"/>
+                    <i:InvokeCommandAction Command="{Binding StartTimerCommand}" CommandParameter="{Binding ElementName=textBox1,Path=Text}"/>
                 </i:EventTrigger>
                 <i:EventTrigger EventName="GotFocus">
                     <i:InvokeCommandAction Command="{Binding PauseTimerCommand}"/>
                 </i:EventTrigger>
             </i:Interaction.Triggers>
-          <TextBox.Text>
-               <Binding Path="Seconds" NotifyOnValidationError="True">
-                   <Binding.ValidationRules>
+            <TextBox.Text>
+                <Binding Path="Seconds" NotifyOnValidationError="True" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
                         <inf:SimpleTimerValidation SecondsMin="0" SecondsMax="72000"/>
                     </Binding.ValidationRules>
-               </Binding>
-           </TextBox.Text>
+                </Binding>
+            </TextBox.Text>
         </TextBox>
 
-        <TextBlock Text="{Binding EvenTime}" HorizontalAlignment="Center"/>
-        <TextBlock Text="{Binding OddTime}" HorizontalAlignment="Center"/>
+        <TextBlock Text="{Binding OddTime}" Style="{StaticResource TextBlockStyle}"/>
+        <TextBlock Text="{Binding EvenTime}" Style="{StaticResource TextBlockStyle}"/>
+        <TextBlock Text="Press Tab to change focus" Style="{StaticResource TextBlockStyle}" Foreground="Red"/>
 
     </StackPanel>
-    
+
 </Window>

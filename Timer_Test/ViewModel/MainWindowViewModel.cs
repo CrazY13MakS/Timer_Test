@@ -67,7 +67,6 @@ namespace Timer_Test.ViewModel
                 OnPropertyChanged();
             }
         }
-
         private String _oddTime;
         /// <summary>
         /// Odd number
@@ -131,14 +130,14 @@ namespace Timer_Test.ViewModel
         /// <param name="parametr"></param>
         private void ExecuteStartTimerCommand(object parametr)
         {
-            SetSecondsLeft(Seconds);
+            SetSecondsLeft(parametr as String);
             if (_secondsLeft <= 0)
             {
                 _secondsLeft = 0;
-                Seconds = _defaultTime;
                 return;
             }
             _timer.Start();
+            Seconds = OddTime = EvenTime = TimeSpan.FromSeconds(_secondsLeft).ToString();
         }
 
         RelayCommand _pauseTimer;
