@@ -12,7 +12,6 @@ namespace Timer_Test.ViewModel
     class MainWindowViewModel : ViewModelBase
     {
         Timer _timer;
-        private int _secondsLeft;
         String _defaultTime;
         public MainWindowViewModel()
         {
@@ -21,7 +20,7 @@ namespace Timer_Test.ViewModel
                 Interval = 1000
             };
             _timer.Elapsed += _timer_Elapsed;
-            _defaultTime = Seconds = OddTime = EvenTime = "00:00:00";
+            _defaultTime = Time = OddTime = EvenTime = "00:00:00";
         }
 
         /// <summary>
@@ -31,17 +30,17 @@ namespace Timer_Test.ViewModel
         /// <param name="e"></param>
         private void _timer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            if (_secondsLeft > 0)
+            if (Seconds > 0)
             {
-                _secondsLeft--;
-                Seconds = TimeSpan.FromSeconds(_secondsLeft).ToString();
-                if (_secondsLeft % 2 == 0)
+                Seconds--;
+                Time = TimeSpan.FromSeconds(Seconds).ToString();
+                if (Seconds % 2 == 0)
                 {
-                    EvenTime = Seconds;
+                    EvenTime = Time;
                 }
                 else
                 {
-                    OddTime = Seconds;
+                    OddTime = Time;
                 }
             }
             else
@@ -50,11 +49,11 @@ namespace Timer_Test.ViewModel
             }
         }
 
-        private String _seconds;
+        private int _seconds;
         /// <summary>
         /// Value in seconds
         /// </summary>
-        public String Seconds
+        public int Seconds
         {
             get { return _seconds; }
             set
@@ -67,6 +66,24 @@ namespace Timer_Test.ViewModel
                 OnPropertyChanged();
             }
         }
+
+        private String _time;
+
+        public String Time
+        {
+            get { return _time; }
+            set
+            {
+                if (_time == value)
+                {
+                    return;
+                }
+                _time = value;
+                OnPropertyChanged();
+            }
+        }
+
+
         private String _oddTime;
         /// <summary>
         /// Odd number
@@ -102,15 +119,6 @@ namespace Timer_Test.ViewModel
             }
         }
 
-        /// <summary>
-        /// Parse from input string to seconds
-        /// </summary>
-        /// <param name="value">Input string</param>
-        private void SetSecondsLeft(String value)
-        {
-            int.TryParse(value, out _secondsLeft);
-        }
-
 
         RelayCommand _startTimer;
         public ICommand StartTimerCommand
@@ -130,14 +138,13 @@ namespace Timer_Test.ViewModel
         /// <param name="parametr"></param>
         private void ExecuteStartTimerCommand(object parametr)
         {
-            SetSecondsLeft(parametr as String);
-            if (_secondsLeft <= 0)
+            if (Seconds <= 0)
             {
-                _secondsLeft = 0;
+                Seconds = 0;
                 return;
             }
             _timer.Start();
-            Seconds = OddTime = EvenTime = TimeSpan.FromSeconds(_secondsLeft).ToString();
+            Time = OddTime = EvenTime = TimeSpan.FromSeconds(Seconds).ToString();
         }
 
         RelayCommand _pauseTimer;
@@ -159,8 +166,7 @@ namespace Timer_Test.ViewModel
         /// <param name="parametr"></param>
         private void ExecutePauseTimerCommand(object parametr)
         {
-            _timer.Stop();
-            Seconds = _secondsLeft.ToString();
+            _timer.Stop();           
         }
 
     }
