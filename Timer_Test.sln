@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.27428.2002
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Timer_Test", "Timer_Test\Timer_Test.csproj", "{55CC0628-487C-4DC3-8316-3C96C640D501}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimerUnitTest", "TimerUnitTest\TimerUnitTest.csproj", "{67021F7F-E198-45E9-A2A5-DF1000CCDB11}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{55CC0628-487C-4DC3-8316-3C96C640D501}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{55CC0628-487C-4DC3-8316-3C96C640D501}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{55CC0628-487C-4DC3-8316-3C96C640D501}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67021F7F-E198-45E9-A2A5-DF1000CCDB11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67021F7F-E198-45E9-A2A5-DF1000CCDB11}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67021F7F-E198-45E9-A2A5-DF1000CCDB11}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67021F7F-E198-45E9-A2A5-DF1000CCDB11}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

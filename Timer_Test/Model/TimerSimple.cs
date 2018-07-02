@@ -12,7 +12,7 @@ namespace Timer_Test.Model
     /// <summary>
     /// Countdown timer
     /// </summary>
-    class TimerSimple :INotifyPropertyChanged
+  public  class TimerSimple :INotifyPropertyChanged
     {
         public Timer Timer { get; protected set; }
 
@@ -34,7 +34,7 @@ namespace Timer_Test.Model
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="interval">Interval of an event call</param>
+        /// <param name="interval">Interval of an event call in milliseconds</param>
         public TimerSimple(double interval)
         {
             Timer = new Timer(interval);
