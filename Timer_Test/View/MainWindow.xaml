@@ -37,11 +37,11 @@
                     <Setter Property="ToolTip" Value="{Binding RelativeSource={x:Static RelativeSource.Self},
                               Path=(Validation.Errors)[0].ErrorContent}"/>
                 </Trigger>
-                <DataTrigger Binding="{Binding IsKeyboardFocusWithin,ElementName=textBox1}" Value="True">
+                <DataTrigger Binding="{Binding IsKeyboardFocusWithin,ElementName=tbSeconds}" Value="True">
                     <Setter Property="TextBox.FontSize" Value="23"/>
                     <Setter Property="Text">
                         <Setter.Value>
-                            <Binding Path="Seconds" NotifyOnValidationError="True" UpdateSourceTrigger="PropertyChanged">
+                            <Binding Path="Timer.Seconds" NotifyOnValidationError="True" UpdateSourceTrigger="PropertyChanged">
                                 <Binding.ValidationRules>
                                     <inf:SimpleTimerValidation SecondsMin="0" SecondsMax="72000"/>
                                 </Binding.ValidationRules>
@@ -61,7 +61,7 @@
 
     </Window.Resources>
     <StackPanel x:Name="grid1"  Focusable="True" >
-        <TextBox Name="textBox1"  
+        <TextBox Name="tbSeconds"  
                  FontSize="15" TabIndex="0"  MinWidth="50" TextAlignment="Center"
              Validation.ErrorTemplate="{StaticResource ValidationTemplate}"
              Style="{StaticResource TextBoxInError}"

@@ -6,20 +6,18 @@ using System.Threading.Tasks;
 using System.Timers;
 using System.Windows.Input;
 using Timer_Test.Infrastructure;
+using Timer_Test.Model;
 
 namespace Timer_Test.ViewModel
 {
     class MainWindowViewModel : ViewModelBase
     {
-        Timer _timer;
+        public TimerSimple Timer { get; set; }
         String _defaultTime;
         public MainWindowViewModel()
         {
-            _timer = new Timer
-            {
-                Interval = 1000
-            };
-            _timer.Elapsed += _timer_Elapsed;
+            Timer = new TimerSimple(1000);
+            Timer.TimerElapsed += _timer_Elapsed;
             _defaultTime = Time = OddTime = EvenTime = "00:00:00";
         }
 
@@ -30,11 +28,9 @@ namespace Timer_Test.ViewModel
         /// <param name="e"></param>
         private void _timer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            if (Seconds > 0)
-            {
-                Seconds--;
-                Time = TimeSpan.FromSeconds(Seconds).ToString();
-                if (Seconds % 2 == 0)
+
+                Time = TimeSpan.FromSeconds(Timer.Seconds).ToString();
+                if (Timer.Seconds % 2 == 0)
                 {
                     EvenTime = Time;
                 }
@@ -42,30 +38,9 @@ namespace Timer_Test.ViewModel
                 {
                     OddTime = Time;
                 }
-            }
-            else
-            {
-                _timer.Stop();
-            }
+
         }
 
-        private int _seconds;
-        /// <summary>
-        /// Value in seconds
-        /// </summary>
-        public int Seconds
-        {
-            get { return _seconds; }
-            set
-            {
-                if (_seconds == value)
-                {
-                    return;
-                }
-                _seconds = value;
-                OnPropertyChanged();
-            }
-        }
 
         private String _time;
 
@@ -138,13 +113,17 @@ namespace Timer_Test.ViewModel
         /// <param name="parametr"></param>
         private void ExecuteStartTimerCommand(object parametr)
         {
-            if (Seconds <= 0)
-            {
-                Seconds = 0;
+            if (Timer.Seconds <= 0)
+            {              
                 return;
             }
-            _timer.Start();
-            Time = OddTime = EvenTime = TimeSpan.FromSeconds(Seconds).ToString();
+            Time = OddTime = EvenTime = TimeSpan.FromSeconds(Timer.Seconds).ToString();
+            Timer.Start();
+        }
+
+        private bool CanExecuteStartTimerCommand(object parametr)
+        {
+            return Timer.Seconds > 0;
         }
 
         RelayCommand _pauseTimer;
@@ -166,7 +145,7 @@ namespace Timer_Test.ViewModel
         /// <param name="parametr"></param>
         private void ExecutePauseTimerCommand(object parametr)
         {
-            _timer.Stop();           
+            Timer.Stop();           
         }
 
     }

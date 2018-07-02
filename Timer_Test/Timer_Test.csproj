@@ -61,7 +61,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Infrastructure\RelayCommand.cs" />
-    <Compile Include="Infrastructure\SimpleTimer.cs" />
+    <Compile Include="Infrastructure\SimpleTimerValidation.cs" />
+    <Compile Include="Model\TimerSimple.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Page Include="View\MainWindow.xaml">
